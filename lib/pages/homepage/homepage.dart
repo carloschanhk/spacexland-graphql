@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:spacexland_graphql/constants/ui_files.dart';
 
-class OnlinePost extends StatefulWidget {
+class HomePage extends StatefulWidget {
+  HomePage({Key key}) : super(key: key);
+
   @override
-  _OnlinePostState createState() => _OnlinePostState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _OnlinePostState extends State<OnlinePost> {
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      
     );
   }
 }
