@@ -39,11 +39,12 @@ class GoButton extends StatelessWidget {
             ),
           )
               .then((value) {
-            final returningData = value.data["insert_users"]["returning"][0];
-            user = AppUser(
-              returningData["name"],
-              returningData["rocket"],
-            );
+            Map<String, dynamic> returningData =
+                value.data["insert_users"]["returning"][0];
+
+            user = AppUser.fromJson(returningData);
+            print(user.userName);
+            print(user.userRocket);
           }).whenComplete(() {
             nameController.clear();
             rocketController.clear();

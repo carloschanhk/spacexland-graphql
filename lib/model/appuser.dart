@@ -4,12 +4,14 @@ part 'appuser.g.dart';
 
 @JsonSerializable()
 class AppUser {
+  @JsonKey(name: 'name')
   final String userName;
+  @JsonKey(name: 'rocket')
   final String userRocket;
 
   AppUser(
-    @JsonKey(name: 'name') this.userName,
-    @JsonKey(name: 'rocket') this.userRocket,
+    this.userName,
+    this.userRocket,
   );
 
   factory AppUser.fromJson(Map<String, dynamic> json) =>
