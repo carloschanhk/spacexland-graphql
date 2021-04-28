@@ -17,7 +17,6 @@ class LaunchFetch {
         wikipedia
         description
         company
-        cost_per_launch
         country
       }
     }

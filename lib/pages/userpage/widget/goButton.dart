@@ -10,6 +10,7 @@ class GoButton extends StatelessWidget {
     @required this.nameController,
     @required this.rocketController,
     this.changeLoadingState,
+    this.parentContext,
   })  : _formKey = formKey,
         super(key: key);
 
@@ -17,10 +18,12 @@ class GoButton extends StatelessWidget {
   final TextEditingController nameController;
   final TextEditingController rocketController;
   final Function changeLoadingState;
+  final BuildContext parentContext;
 
   @override
   Widget build(BuildContext context) {
     GraphQLClient _client = GraphQLProvider.of(context).value;
+    AppUser user;
     return TextButton(
       onPressed: () {
         if (_formKey.currentState.validate()) {
@@ -37,20 +40,21 @@ class GoButton extends StatelessWidget {
           )
               .then((value) {
             final returningData = value.data["insert_users"]["returning"][0];
-            AppUser user = AppUser(
+            user = AppUser(
               returningData["name"],
               returningData["rocket"],
             );
-            changeLoadingState();
-            context.rootNavigator.push(
+          }).whenComplete(() {
+            nameController.clear();
+            rocketController.clear();
+            parentContext.rootNavigator.push(
               Routes.homePage,
               arguments: HomePageArguments(
                 user: user,
+                changeLoadingState: changeLoadingState,
               ),
             );
           });
-          nameController.clear();
-          rocketController.clear();
         }
       },
       child: Text(

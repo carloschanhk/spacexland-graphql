@@ -21,6 +21,7 @@ class _UserPageState extends State<UserPage> {
   }
 
   void _changeLoadingState() {
+    print("called");
     setState(() {
       loading = !loading;
     });
@@ -30,32 +31,48 @@ class _UserPageState extends State<UserPage> {
   Widget build(BuildContext context) {
     return GraphQLProvider(
       client: Config.initialClient(),
-      child: Scaffold(
-        body: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              InputRow(
-                textController: nameController,
-                field: "Name",
-              ).padding(bottom: 20),
-              InputRow(
-                textController: rocketController,
-                field: "Rocket",
-              ).padding(bottom: 20),
-              GoButton(
-                formKey: _formKey,
-                nameController: nameController,
-                rocketController: rocketController,
-                changeLoadingState: _changeLoadingState,
+      child: loading
+          ? LoadingWidget()
+          : Scaffold(
+              body: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    InputRow(
+                      textController: nameController,
+                      field: "Name",
+                    ).padding(bottom: 20),
+                    InputRow(
+                      textController: rocketController,
+                      field: "Rocket",
+                    ).padding(bottom: 20),
+                    GoButton(
+                      formKey: _formKey,
+                      nameController: nameController,
+                      rocketController: rocketController,
+                      changeLoadingState: _changeLoadingState,
+                      parentContext: context,
+                    ),
+                    // loading
+                    //     ? CircularProgressIndicator().padding(vertical: 40)
+                    //     : Container(),
+                  ],
+                  mainAxisAlignment: MainAxisAlignment.center,
+                ).padding(horizontal: 20),
               ),
-              loading
-                  ? CircularProgressIndicator().padding(vertical: 40)
-                  : Container(),
-            ],
-            mainAxisAlignment: MainAxisAlignment.center,
-          ).padding(horizontal: 20),
-        ),
+            ),
+    );
+  }
+}
+
+class LoadingWidget extends StatelessWidget {
+  const LoadingWidget({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: CircularProgressIndicator(),
       ),
     );
   }

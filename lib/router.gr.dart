@@ -44,6 +44,7 @@ class AppRouter extends RouterBase {
         builder: (context) => HomePage(
           key: args.key,
           user: args.user,
+          changeLoadingState: args.changeLoadingState,
         ),
         settings: data,
       );
@@ -77,7 +78,8 @@ class AppRouter extends RouterBase {
 class HomePageArguments {
   final Key key;
   final AppUser user;
-  HomePageArguments({this.key, this.user});
+  final Function changeLoadingState;
+  HomePageArguments({this.key, this.user, this.changeLoadingState});
 }
 
 /// UserPage arguments holder class
