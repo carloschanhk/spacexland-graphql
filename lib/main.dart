@@ -7,16 +7,30 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  final _appRouter = AppRouter();
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'SpaceXLand GraphQL',
+    // return MaterialApp.router(
+    //   title: 'SpaceXLand GraphQL',
+    //   theme: ThemeData(
+    //     primarySwatch: Colors.blue,
+    //   ),
+    //   routerDelegate: _appRouter.delegate(),
+    //   routeInformationParser: _appRouter.defaultRouteParser(),
+    // );
+    return MaterialApp(
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      routerDelegate: _appRouter.delegate(),
-      routeInformationParser: _appRouter.defaultRouteParser(),
+      builder: ExtendedNavigator<AppRouter>(
+        router: AppRouter(),
+      ),
     );
+    // return MaterialApp(
+    //   title: 'spaceX',
+    //   theme: ThemeData(
+    //     primarySwatch: Colors.blue,
+    //   ),
+    //   home: UserPage(),
+    // );
   }
 }
