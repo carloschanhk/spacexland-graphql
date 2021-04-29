@@ -27,7 +27,8 @@ class GoButton extends StatelessWidget {
   Widget build(BuildContext context) {
     GraphQLClient _client = GraphQLProvider.of(context).value;
     AppUser user;
-    final LaunchesModel launchesProvider = context.watch<LaunchesModel>();
+    final PastLaunchesModel launchesProvider =
+        context.watch<PastLaunchesModel>();
     return TextButton(
       onPressed: () {
         if (_formKey.currentState.validate()) {
@@ -82,7 +83,7 @@ class GoButton extends StatelessWidget {
   }
 
   Future<Text> fetchPastLaunches(
-      GraphQLClient _client, LaunchesModel launchesProvider) {
+      GraphQLClient _client, PastLaunchesModel launchesProvider) {
     return _client
         .query(
       QueryOptions(

@@ -10,6 +10,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import 'model/appuser.dart';
+import 'model/launch.dart';
 import 'pages/detailspage/detailspage.dart';
 import 'pages/homepage/homepage.dart';
 import 'pages/userpage/userpage.dart';
@@ -63,7 +64,10 @@ class AppRouter extends RouterBase {
         orElse: () => DetailsPageArguments(),
       );
       return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => DetailsPage(key: args.key),
+        builder: (context) => DetailsPage(
+          key: args.key,
+          launch: args.launch,
+        ),
         settings: data,
       );
     },
@@ -91,5 +95,6 @@ class UserPageArguments {
 /// DetailsPage arguments holder class
 class DetailsPageArguments {
   final Key key;
-  DetailsPageArguments({this.key});
+  final Launch launch;
+  DetailsPageArguments({this.key, this.launch});
 }

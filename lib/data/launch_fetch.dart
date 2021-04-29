@@ -22,6 +22,7 @@ class LaunchFetch {
     }
     launch_year
     id
+    details
   }
 }
 """;

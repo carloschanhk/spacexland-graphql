@@ -7,7 +7,8 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => LaunchesModel()),
+        ChangeNotifierProvider(create: (context) => PastLaunchesModel()),
+        ChangeNotifierProvider(create: (context) => UpcomingLaunchesModel()),
       ],
       child: MyApp(),
     ),

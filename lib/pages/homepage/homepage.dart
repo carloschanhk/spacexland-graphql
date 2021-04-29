@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spacexland_graphql/constants/ui_files.dart';
 import 'package:spacexland_graphql/model/appuser.dart';
 import 'package:spacexland_graphql/model/launch.dart';
+import 'package:spacexland_graphql/pages/homepage/widget/launchNewsTile.dart';
 import '../../data/launch_fetch.dart';
 import '../../provider/launches_provider.dart';
 
@@ -16,11 +17,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   VoidCallback refetchQuery;
-  LaunchesModel launchesProvider;
+  PastLaunchesModel launchesProvider;
 
   @override
   Widget build(BuildContext context) {
-    final launchesProvider = context.watch<LaunchesModel>();
+    final launchesProvider = context.watch<PastLaunchesModel>();
     return GraphQLProvider(
       client: Config.initialClient(),
       child: WillPopScope(
@@ -28,6 +29,7 @@ class _HomePageState extends State<HomePage> {
         child: DefaultTabController(
           length: 2,
           child: Scaffold(
+            backgroundColor: Colors.white,
             appBar: AppBar(
               leading: IconButton(
                   icon: Icon(Icons.arrow_back),
@@ -46,41 +48,14 @@ class _HomePageState extends State<HomePage> {
             ),
             body: TabBarView(children: [
               Container(
-                // child: Query(
-                //   options: QueryOptions(
-                //     document: gql(LaunchFetch.pastLaunchesFetch),
-                //   ),
-                //   builder: (QueryResult result,
-                //       {VoidCallback refetch, FetchMore fetchMore}) {
-                //     refetchQuery = refetch;
-                //     if (result.hasException) {
-                //       return Text(result.hasException.toString());
-                //     }
-                //     if (result.isLoading) {
-                //       return Text("loading");
-                //     } else {
-                //       final returningData = result.data['launchesPast'];
-                //       print(returningData.length);
-                //       for (var launch in returningData) {
-                //         launchesProvider.addLaunches(Launch.fromJson(launch));
-                //       }
-
-                //       return ListView.builder(
-                //         itemCount: launchesProvider.launchesList.length,
-                //         itemBuilder: (context, index) {
-                //           return ListTile(
-                //             title: Text("$index"),
-                //           );
-                //         },
-                //       );
-                //     }
-                //   },
-                // ),
                 child: ListView.builder(
                   itemCount: launchesProvider.launchesList.length,
                   itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text("$index"),
+                    return LaunchNewsTile(
+                      launch: launchesProvider.launchesList[index],
+                    ).padding(
+                      horizontal: 10,
+                      vertical: 5,
                     );
                   },
                 ),

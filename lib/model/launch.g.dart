@@ -8,6 +8,7 @@ part of 'launch.dart';
 
 Launch _$LaunchFromJson(Map<String, dynamic> json) {
   return Launch(
+    details: json['details'],
     id: json['id'],
     launchSite: json['launch_site'] == null
         ? null
@@ -32,6 +33,7 @@ Map<String, dynamic> _$LaunchToJson(Launch instance) => <String, dynamic>{
       'rocket': instance.rocketHeader?.toJson(),
       'launch_year': instance.launchYear,
       'id': instance.id,
+      'details': instance.details,
     };
 
 RocketHeader _$RocketHeaderFromJson(Map<String, dynamic> json) {

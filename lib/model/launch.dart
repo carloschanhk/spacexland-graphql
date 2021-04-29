@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-
+import 'package:intl/intl.dart';
 part 'launch.g.dart';
 
 @JsonSerializable(explicitToJson: true)
@@ -8,6 +8,7 @@ class Launch {
   final missionName;
   @JsonKey(name: "launch_date_local")
   final launchDate;
+  final formattedDate;
   @JsonKey(name: "launch_site")
   final LaunchSite launchSite;
   final LaunchLink links;
@@ -16,8 +17,10 @@ class Launch {
   @JsonKey(name: 'launch_year')
   final launchYear;
   final id;
+  final details;
 
   Launch({
+    this.details,
     this.id,
     this.launchSite,
     this.rocketHeader,
@@ -25,7 +28,8 @@ class Launch {
     this.launchDate,
     this.links,
     this.launchYear,
-  });
+  }) : formattedDate =
+            DateFormat('MMM dd, yyyy').format(DateTime.parse(launchDate));
 
   factory Launch.fromJson(Map<String, dynamic> json) => _$LaunchFromJson(json);
   Map<String, dynamic> toJson() => _$LaunchToJson(this);
