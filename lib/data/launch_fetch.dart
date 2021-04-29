@@ -1,5 +1,5 @@
 class LaunchFetch {
-  static String pastLaunchesFetch = """query {
+  static String pastLaunchesFetch = """query fetchPastLaunches{
   launchesPast(limit: 10) {
     mission_name
     launch_date_local
@@ -9,7 +9,7 @@ class LaunchFetch {
     links {
       article_link
       video_link
-      flickr_images:flickr_images
+      flickr_images
     }
     rocket {
       rocket {
@@ -21,6 +21,7 @@ class LaunchFetch {
       }
     }
     launch_year
+    id
   }
 }
 """;

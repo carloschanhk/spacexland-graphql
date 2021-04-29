@@ -8,24 +8,43 @@ part of 'launch.dart';
 
 Launch _$LaunchFromJson(Map<String, dynamic> json) {
   return Launch(
-    missionName: json['missionName'],
+    id: json['id'],
+    launchSite: json['launch_site'] == null
+        ? null
+        : LaunchSite.fromJson(json['launch_site'] as Map<String, dynamic>),
+    rocketHeader: json['rocket'] == null
+        ? null
+        : RocketHeader.fromJson(json['rocket'] as Map<String, dynamic>),
+    missionName: json['mission_name'],
     launchDate: json['launch_date_local'],
-    launchSiteName: json['site_name_long'],
-    articleLink: json['articleLink'],
-    videoLink: json['videoLink'],
-    imageList: json['imageList'] as List,
-    launchYear: json['launchYear'],
+    links: json['links'] == null
+        ? null
+        : LaunchLink.fromJson(json['links'] as Map<String, dynamic>),
+    launchYear: json['launch_year'],
   );
 }
 
 Map<String, dynamic> _$LaunchToJson(Launch instance) => <String, dynamic>{
-      'missionName': instance.missionName,
+      'mission_name': instance.missionName,
       'launch_date_local': instance.launchDate,
-      'site_name_long': instance.launchSiteName,
-      'articleLink': instance.articleLink,
-      'videoLink': instance.videoLink,
-      'imageList': instance.imageList,
-      'launchYear': instance.launchYear,
+      'launch_site': instance.launchSite?.toJson(),
+      'links': instance.links?.toJson(),
+      'rocket': instance.rocketHeader?.toJson(),
+      'launch_year': instance.launchYear,
+      'id': instance.id,
+    };
+
+RocketHeader _$RocketHeaderFromJson(Map<String, dynamic> json) {
+  return RocketHeader(
+    json['rocket'] == null
+        ? null
+        : Rocket.fromJson(json['rocket'] as Map<String, dynamic>),
+  );
+}
+
+Map<String, dynamic> _$RocketHeaderToJson(RocketHeader instance) =>
+    <String, dynamic>{
+      'rocket': instance.rocket?.toJson(),
     };
 
 Rocket _$RocketFromJson(Map<String, dynamic> json) {
@@ -44,4 +63,30 @@ Map<String, dynamic> _$RocketToJson(Rocket instance) => <String, dynamic>{
       'rocketDescription': instance.rocketDescription,
       'rocketCompany': instance.rocketCompany,
       'rocketCountry': instance.rocketCountry,
+    };
+
+LaunchLink _$LaunchLinkFromJson(Map<String, dynamic> json) {
+  return LaunchLink(
+    json['article_link'],
+    json['video_link'],
+    json['flickr_images'],
+  );
+}
+
+Map<String, dynamic> _$LaunchLinkToJson(LaunchLink instance) =>
+    <String, dynamic>{
+      'article_link': instance.articleLink,
+      'video_link': instance.videoLink,
+      'flickr_images': instance.imageList,
+    };
+
+LaunchSite _$LaunchSiteFromJson(Map<String, dynamic> json) {
+  return LaunchSite(
+    json['site_name_long'],
+  );
+}
+
+Map<String, dynamic> _$LaunchSiteToJson(LaunchSite instance) =>
+    <String, dynamic>{
+      'site_name_long': instance.siteName,
     };

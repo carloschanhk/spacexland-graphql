@@ -21,7 +21,6 @@ class _UserPageState extends State<UserPage> {
   }
 
   void _changeLoadingState() {
-    print("called");
     setState(() {
       loading = !loading;
     });
@@ -53,9 +52,6 @@ class _UserPageState extends State<UserPage> {
                       changeLoadingState: _changeLoadingState,
                       parentContext: context,
                     ),
-                    // loading
-                    //     ? CircularProgressIndicator().padding(vertical: 40)
-                    //     : Container(),
                   ],
                   mainAxisAlignment: MainAxisAlignment.center,
                 ).padding(horizontal: 20),

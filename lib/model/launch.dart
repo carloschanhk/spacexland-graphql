@@ -2,29 +2,44 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'launch.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class Launch {
+  @JsonKey(name: 'mission_name')
   final missionName;
   @JsonKey(name: "launch_date_local")
   final launchDate;
-  @JsonKey(name: "site_name_long")
-  final launchSiteName;
-  final articleLink;
-  final videoLink;
-  final List imageList;
+  @JsonKey(name: "launch_site")
+  final LaunchSite launchSite;
+  final LaunchLink links;
+  @JsonKey(name: "rocket")
+  final RocketHeader rocketHeader;
+  @JsonKey(name: 'launch_year')
   final launchYear;
+  final id;
 
   Launch({
+    this.id,
+    this.launchSite,
+    this.rocketHeader,
     this.missionName,
     this.launchDate,
-    this.launchSiteName,
-    this.articleLink,
-    this.videoLink,
-    this.imageList,
+    this.links,
     this.launchYear,
   });
+
   factory Launch.fromJson(Map<String, dynamic> json) => _$LaunchFromJson(json);
   Map<String, dynamic> toJson() => _$LaunchToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class RocketHeader {
+  final Rocket rocket;
+
+  RocketHeader(this.rocket);
+
+  factory RocketHeader.fromJson(Map<String, dynamic> json) =>
+      _$RocketHeaderFromJson(json);
+  Map<String, dynamic> toJson() => _$RocketHeaderToJson(this);
 }
 
 @JsonSerializable()
@@ -45,4 +60,32 @@ class Rocket {
 
   factory Rocket.fromJson(Map<String, dynamic> json) => _$RocketFromJson(json);
   Map<String, dynamic> toJson() => _$RocketToJson(this);
+}
+
+@JsonSerializable()
+class LaunchLink {
+  @JsonKey(name: 'article_link')
+  final articleLink;
+  @JsonKey(name: 'video_link')
+  final videoLink;
+  @JsonKey(name: 'flickr_images')
+  final imageList;
+
+  LaunchLink(this.articleLink, this.videoLink, this.imageList);
+
+  factory LaunchLink.fromJson(Map<String, dynamic> json) =>
+      _$LaunchLinkFromJson(json);
+  Map<String, dynamic> toJson() => _$LaunchLinkToJson(this);
+}
+
+@JsonSerializable()
+class LaunchSite {
+  @JsonKey(name: 'site_name_long')
+  final siteName;
+
+  LaunchSite(this.siteName);
+
+  factory LaunchSite.fromJson(Map<String, dynamic> json) =>
+      _$LaunchSiteFromJson(json);
+  Map<String, dynamic> toJson() => _$LaunchSiteToJson(this);
 }
