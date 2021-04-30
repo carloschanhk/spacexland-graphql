@@ -22,6 +22,7 @@ Launch _$LaunchFromJson(Map<String, dynamic> json) {
         ? null
         : LaunchLink.fromJson(json['links'] as Map<String, dynamic>),
     launchYear: json['launch_year'],
+    isLiked: json['isLiked'] as bool ?? false,
   );
 }
 
@@ -34,6 +35,7 @@ Map<String, dynamic> _$LaunchToJson(Launch instance) => <String, dynamic>{
       'launch_year': instance.launchYear,
       'id': instance.id,
       'details': instance.details,
+      'isLiked': instance.isLiked,
     };
 
 RocketHeader _$RocketHeaderFromJson(Map<String, dynamic> json) {
@@ -51,20 +53,28 @@ Map<String, dynamic> _$RocketHeaderToJson(RocketHeader instance) =>
 
 Rocket _$RocketFromJson(Map<String, dynamic> json) {
   return Rocket(
-    rocketName: json['rocketName'],
-    rocketWiki: json['rocketWiki'],
-    rocketDescription: json['rocketDescription'],
-    rocketCompany: json['rocketCompany'],
-    rocketCountry: json['rocketCountry'],
+    costPerLaunch: json['cost_per_launch'],
+    firstFlight: json['first_flight'],
+    successRatePct: json['success_rate_pct'],
+    active: json['active'],
+    wikipedia: json['wikipedia'],
+    description: json['description'],
+    company: json['company'],
+    country: json['country'],
+    name: json['name'],
   );
 }
 
 Map<String, dynamic> _$RocketToJson(Rocket instance) => <String, dynamic>{
-      'rocketName': instance.rocketName,
-      'rocketWiki': instance.rocketWiki,
-      'rocketDescription': instance.rocketDescription,
-      'rocketCompany': instance.rocketCompany,
-      'rocketCountry': instance.rocketCountry,
+      'name': instance.name,
+      'wikipedia': instance.wikipedia,
+      'description': instance.description,
+      'company': instance.company,
+      'country': instance.country,
+      'cost_per_launch': instance.costPerLaunch,
+      'first_flight': instance.firstFlight,
+      'success_rate_pct': instance.successRatePct,
+      'active': instance.active,
     };
 
 LaunchLink _$LaunchLinkFromJson(Map<String, dynamic> json) {

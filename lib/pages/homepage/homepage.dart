@@ -17,11 +17,31 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   VoidCallback refetchQuery;
-  PastLaunchesModel launchesProvider;
+  PastLaunchesModel pastLaunchesProvider;
+  LikedLaunchesModel likedLaunchesProvider;
+  bool loading = false;
+
+  likeLaunchToggle(Launch launch) {
+    if (launch.isLiked) {
+      context.read<LikedLaunchesModel>().deleteLaunches(launch);
+    } else {
+      context.read<LikedLaunchesModel>().addLaunches(launch);
+    }
+    setState(() {
+      launch.isLiked = !launch.isLiked;
+    });
+  }
+
+  void _changeLoadingState() {
+    setState(() {
+      loading = !loading;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    final launchesProvider = context.watch<PastLaunchesModel>();
+    final pastLaunchesProvider = context.watch<PastLaunchesModel>();
+    final likedLaunchesProvider = context.watch<LikedLaunchesModel>();
     return GraphQLProvider(
       client: Config.initialClient(),
       child: WillPopScope(
@@ -35,32 +55,50 @@ class _HomePageState extends State<HomePage> {
                   icon: Icon(Icons.arrow_back),
                   onPressed: () {
                     widget.changeLoadingState();
-                    launchesProvider.clearLaunches();
+                    pastLaunchesProvider.clearLaunches();
                     context.navigator.pop();
                   }),
               title: Text("Welcome ${widget.user.userName}"),
               bottom: TabBar(
                 tabs: [
                   Tab(child: Text("Past Launches")),
-                  Tab(child: Text("Upcoming Launches")),
+                  Tab(child: Text("Liked Launches")),
                 ],
               ),
             ),
             body: TabBarView(children: [
+              SingleChildScrollView(
+                child: Column(children: [
+                  ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: pastLaunchesProvider.launchesList.length,
+                    itemBuilder: (context, index) {
+                      return LaunchNewsTile(
+                        launch: pastLaunchesProvider.launchesList[index],
+                        likeLaunchToggle: likeLaunchToggle,
+                      ).padding(horizontal: 10, vertical: 5);
+                    },
+                  ),
+                  loading
+                      ? CircularProgressIndicator().padding(vertical: 10)
+                      : LoadMoreButton(
+                          pastLaunchesProvider: pastLaunchesProvider,
+                          changeLoadingState: _changeLoadingState,
+                        ).padding(bottom: 10),
+                ]),
+              ),
               Container(
                 child: ListView.builder(
-                  itemCount: launchesProvider.launchesList.length,
+                  itemCount: likedLaunchesProvider.launchesList.length,
                   itemBuilder: (context, index) {
                     return LaunchNewsTile(
-                      launch: launchesProvider.launchesList[index],
-                    ).padding(
-                      horizontal: 10,
-                      vertical: 5,
+                      likeLaunchToggle: likeLaunchToggle,
+                      launch: likedLaunchesProvider.launchesList[index],
                     );
                   },
                 ),
               ),
-              Container()
             ]),
             // bottomNavigationBar: BottomNavigationBar(
             //   items: [
@@ -75,6 +113,45 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class LoadMoreButton extends StatelessWidget {
+  const LoadMoreButton({
+    Key key,
+    @required this.pastLaunchesProvider,
+    this.changeLoadingState,
+  }) : super(key: key);
+
+  final PastLaunchesModel pastLaunchesProvider;
+  final Function changeLoadingState;
+
+  @override
+  Widget build(BuildContext context) {
+    final GraphQLClient _client = GraphQLProvider.of(context).value;
+    return ElevatedButton(
+      onPressed: () {
+        changeLoadingState();
+        _client
+            .query(QueryOptions(
+          document: gql(LaunchFetch.pastLaunchesFetch),
+          variables: {
+            "launchesLimit": pastLaunchesProvider.launchesList.length + 5
+          },
+        ))
+            .then((result) {
+          pastLaunchesProvider.clearLaunches();
+          final returningData = result.data['launchesPast'];
+          for (var launch in returningData) {
+            print("loading more");
+            pastLaunchesProvider.addLaunches(Launch.fromJson(launch));
+          }
+        }).whenComplete(() {
+          changeLoadingState();
+        });
+      },
+      child: Text("Load More").padding(vertical: 12),
     );
   }
 }

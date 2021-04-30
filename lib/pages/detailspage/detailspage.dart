@@ -80,6 +80,7 @@ class BodyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Rocket rocket = launch.rocketHeader.rocket;
     return YoutubePlayerBuilder(
       player: YoutubePlayer(
         controller: youtubeController,
@@ -113,10 +114,47 @@ class BodyWidget extends StatelessWidget {
                 ),
               ).padding(top: 10),
               Text(
-                "${launch.details}",
+                "${launch.details ?? ''}",
                 style: TextStyle(fontSize: 16, height: 1.5),
-              ).padding(top: 10),
+              ).padding(vertical: 10),
               player,
+              Text(
+                "Rocket Infomation",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ).padding(top: 10),
+              Text("Rocket Name: ${rocket.name}")
+                  .fontSize(16)
+                  .padding(top: 10, bottom: 5),
+              Text("Company: ${rocket.company}, ${rocket.country}")
+                  .fontSize(16),
+              Text(
+                "Description",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ).fontSize(16).padding(top: 10),
+              Text(
+                "${rocket.description}",
+                style: TextStyle(fontSize: 16, height: 1.5),
+              ),
+              Container(
+                child: launch.links.imageList.length > 0
+                    ? ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: launch.links.imageList.sublist(1).length,
+                        itemBuilder: (context, index) {
+                          return CachedNetworkImage(
+                            width: deviceMedia.size.width,
+                            height: deviceMedia.size.height / 4,
+                            fit: BoxFit.fill,
+                            imageUrl: launch.links.imageList.sublist(1)[index],
+                          ).padding(vertical: 5);
+                        },
+                      )
+                    : null,
+              ),
             ],
           ).padding(horizontal: 20, top: 10),
         );

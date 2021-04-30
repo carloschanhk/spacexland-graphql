@@ -18,17 +18,20 @@ class Launch {
   final launchYear;
   final id;
   final details;
+  @JsonKey(defaultValue: false)
+  bool isLiked;
 
-  Launch({
-    this.details,
-    this.id,
-    this.launchSite,
-    this.rocketHeader,
-    this.missionName,
-    this.launchDate,
-    this.links,
-    this.launchYear,
-  }) : formattedDate =
+  Launch(
+      {this.details,
+      this.id,
+      this.launchSite,
+      this.rocketHeader,
+      this.missionName,
+      this.launchDate,
+      this.links,
+      this.launchYear,
+      this.isLiked})
+      : formattedDate =
             DateFormat('MMM dd, yyyy').format(DateTime.parse(launchDate));
 
   factory Launch.fromJson(Map<String, dynamic> json) => _$LaunchFromJson(json);
@@ -48,18 +51,29 @@ class RocketHeader {
 
 @JsonSerializable()
 class Rocket {
-  final rocketName;
-  final rocketWiki;
-  final rocketDescription;
-  final rocketCompany;
-  final rocketCountry;
+  final name;
+  final wikipedia;
+  final description;
+  final company;
+  final country;
+  @JsonKey(name: 'cost_per_launch')
+  final costPerLaunch;
+  @JsonKey(name: 'first_flight')
+  final firstFlight;
+  @JsonKey(name: 'success_rate_pct')
+  final successRatePct;
+  final active;
 
   Rocket({
-    this.rocketName,
-    this.rocketWiki,
-    this.rocketDescription,
-    this.rocketCompany,
-    this.rocketCountry,
+    this.costPerLaunch,
+    this.firstFlight,
+    this.successRatePct,
+    this.active,
+    this.wikipedia,
+    this.description,
+    this.company,
+    this.country,
+    this.name,
   });
 
   factory Rocket.fromJson(Map<String, dynamic> json) => _$RocketFromJson(json);

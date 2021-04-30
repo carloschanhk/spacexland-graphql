@@ -8,8 +8,17 @@ class PastLaunchesModel extends ChangeNotifier {
 
   List get launchesList => _launchesList;
 
-  void addLaunches(Launch launch) {
-    _launchesList.add(launch);
+  void addLaunches(Launch launch, {int index}) {
+    if (index != null) {
+      _launchesList.insert(index, launch);
+    } else {
+      _launchesList.add(launch);
+    }
+    notifyListeners();
+  }
+
+  void deleteLaunches(Launch launch) {
+    _launchesList.removeWhere((element) => element == launch);
     notifyListeners();
   }
 
@@ -19,13 +28,18 @@ class PastLaunchesModel extends ChangeNotifier {
   }
 }
 
-class UpcomingLaunchesModel extends ChangeNotifier {
+class LikedLaunchesModel extends ChangeNotifier {
   List _launchesList = [];
 
   List get launchesList => _launchesList;
 
   void addLaunches(Launch launch) {
     _launchesList.add(launch);
+    notifyListeners();
+  }
+
+  void deleteLaunches(Launch launch) {
+    _launchesList.removeWhere((element) => element == launch);
     notifyListeners();
   }
 

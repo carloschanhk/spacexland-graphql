@@ -82,21 +82,18 @@ class GoButton extends StatelessWidget {
     );
   }
 
-  Future<Text> fetchPastLaunches(
+  Future fetchPastLaunches(
       GraphQLClient _client, PastLaunchesModel launchesProvider) {
     return _client
-        .query(
-      QueryOptions(
-        document: gql(LaunchFetch.pastLaunchesFetch),
-      ),
-    )
-        .then(
-      (result) {
-        final returningData = result.data['launchesPast'];
-        for (var launch in returningData) {
-          launchesProvider.addLaunches(Launch.fromJson(launch));
-        }
-      },
-    );
+        .query(QueryOptions(
+      document: gql(LaunchFetch.pastLaunchesFetch),
+      variables: {"launchesLimit": 10},
+    ))
+        .then((result) {
+      final returningData = result.data['launchesPast'];
+      for (var launch in returningData) {
+        launchesProvider.addLaunches(Launch.fromJson(launch));
+      }
+    });
   }
 }
