@@ -6,7 +6,7 @@ export '../client/client.dart';
 export 'package:auto_route/auto_route.dart';
 export 'package:spacexland_graphql/router.gr.dart';
 export 'package:cached_network_image/cached_network_image.dart';
-
+export 'package:flutter_svg/flutter_svg.dart';
 export 'package:intl/intl.dart';
 
 class UIFiles {}

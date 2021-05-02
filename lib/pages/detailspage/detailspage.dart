@@ -1,5 +1,5 @@
+import 'package:spacexland_graphql/general_widgets/like_button.dart';
 import 'package:spacexland_graphql/model/launch.dart';
-
 import '../../constants/ui_files.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -53,6 +53,9 @@ class _DetailsPageState extends State<DetailsPage> {
                 context.navigator.pop();
               },
             ),
+            actions: [
+              LikeButton(launch: widget.launch).padding(right: 20),
+            ],
             elevation: 0,
           ),
           body: BodyWidget(

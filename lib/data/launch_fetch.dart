@@ -1,7 +1,7 @@
 class LaunchFetch {
   static String pastLaunchesFetch = """
-  query fetchPastLaunches (\$launchesLimit: Int!){
-    launchesPast(limit: \$launchesLimit) {
+  query fetchPastLaunches (\$launchesLimit: Int!, \$skip: Int! = 0){
+    launchesPast(limit: \$launchesLimit, offset: \$skip) {
       mission_name
       launch_date_local
       launch_site {

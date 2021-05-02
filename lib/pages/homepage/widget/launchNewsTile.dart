@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spacexland_graphql/general_widgets/like_button.dart';
 import 'package:spacexland_graphql/model/launch.dart';
 import 'package:spacexland_graphql/provider/launches_provider.dart';
 import '../../../constants/ui_files.dart';
@@ -91,9 +92,8 @@ class LaunchNewsTile extends StatelessWidget {
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          LikedButton(
+                          LikeButton(
                             launch: launch,
-                            likeLaunchToggle: likeLaunchToggle,
                           ),
                           DeleteButton(
                             launch: launch,
@@ -150,31 +150,31 @@ class DeleteButton extends StatelessWidget {
   }
 }
 
-class LikedButton extends StatelessWidget {
-  const LikedButton({
-    Key key,
-    @required this.launch,
-    @required this.likeLaunchToggle,
-  }) : super(key: key);
+// class LikedButton extends StatelessWidget {
+//   const LikedButton({
+//     Key key,
+//     @required this.launch,
+//     @required this.likeLaunchToggle,
+//   }) : super(key: key);
 
-  final Launch launch;
-  final Function likeLaunchToggle;
+//   final Launch launch;
+//   final Function likeLaunchToggle;
 
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      onPressed: () {
-        final SnackBar likeSnackBar = SnackBar(
-          duration: Duration(seconds: 1),
-          content: Text(
-            "${launch.missionName} ${launch.isLiked ? 'removed from' : 'added to'} favorite",
-          ),
-        );
-        likeLaunchToggle(launch);
-        ScaffoldMessenger.of(context).showSnackBar(likeSnackBar);
-      },
-      icon: Icon(launch.isLiked ? Icons.favorite : Icons.favorite_border,
-          color: Colors.red[300]),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return IconButton(
+//       onPressed: () {
+//         final SnackBar likeSnackBar = SnackBar(
+//           duration: Duration(seconds: 1),
+//           content: Text(
+//             "${launch.missionName} ${launch.isLiked ? 'removed from' : 'added to'} favorite",
+//           ),
+//         );
+//         likeLaunchToggle(launch);
+//         ScaffoldMessenger.of(context).showSnackBar(likeSnackBar);
+//       },
+//       icon: Icon(launch.isLiked ? Icons.favorite : Icons.favorite_border,
+//           color: Colors.red[300]),
+//     );
+//   }
+// }
