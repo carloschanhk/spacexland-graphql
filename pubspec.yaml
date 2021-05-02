@@ -40,6 +40,7 @@ dependencies:
   youtube_player_iframe: ^2.0.0
   youtube_player_flutter: ^8.0.0
   flutter_svg: ^0.19.3
+  flutter_icons: ^1.1.0
 
 dev_dependencies:
   flutter_test:

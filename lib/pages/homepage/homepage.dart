@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
   ];
   @override
   Widget build(BuildContext context) {
-    final pastLaunchesProvider = context.watch<PastLaunchesModel>();
+    final pastLaunchesProvider = context.read<PastLaunchesModel>();
     return GraphQLProvider(
       client: Config.initialClient(),
       child: WillPopScope(
@@ -51,13 +51,13 @@ class _HomePageState extends State<HomePage> {
             bottomNavigationBar: BottomNavigationBar(
               items: [
                 BottomNavigationBarItem(
-                    label: "Launches", icon: Icon(Icons.local_fire_department)),
+                  label: "Launches",
+                  icon: Icon(FontAwesome.space_shuttle).padding(bottom: 5),
+                ),
                 BottomNavigationBarItem(
-                    label: "Rockets",
-                    // icon: SvgPicture.asset(
-                    //   "lib/data/icons/rocket.svg",
-                    // ),
-                    icon: Icon(Icons.favorite_border)),
+                  label: "Rockets",
+                  icon: Icon(Ionicons.md_rocket).padding(bottom: 5),
+                ),
               ],
               currentIndex: _currentIndex,
               selectedItemColor: Colors.blue,
