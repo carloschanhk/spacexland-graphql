@@ -1,5 +1,5 @@
 # spacexland_graphql
 
-Mobile app project to implement graphql fetching technique from spaceXLand GraphQl database using flutter.
+Mobile app project to implement graphql fetching technique using flutter.
 
-Database: https://github.com/SpaceXLand/api
+API: https://github.com/SpaceXLand/api
