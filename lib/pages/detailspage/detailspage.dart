@@ -124,30 +124,15 @@ class BodyWidget extends StatelessWidget {
                 style: TextStyle(fontSize: 16, height: 1.5),
               ).padding(vertical: 10),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  context.navigator.push(
+                    Routes.rocketDetailPage,
+                    arguments: RocketDetailPageArguments(rocket: rocket),
+                  );
+                },
                 child: Text("Rocket Info"),
-              ),
+              ).padding(bottom: 10),
               player,
-              // Text(
-              //   "Rocket Infomation",
-              //   style: TextStyle(
-              //     fontSize: 20,
-              //     fontWeight: FontWeight.bold,
-              //   ),
-              // ).padding(top: 10),
-              // Text("Rocket Name: ${rocket.name}")
-              //     .fontSize(16)
-              //     .padding(top: 10, bottom: 5),
-              // Text("Company: ${rocket.company}, ${rocket.country}")
-              //     .fontSize(16),
-              // Text(
-              //   "Description",
-              //   style: TextStyle(fontWeight: FontWeight.bold),
-              // ).fontSize(16).padding(top: 10),
-              // Text(
-              //   "${rocket.description}",
-              //   style: TextStyle(fontSize: 16, height: 1.5),
-              // ),
               Container(
                 child: launch.links.imageList.length > 0
                     ? ListView.builder(

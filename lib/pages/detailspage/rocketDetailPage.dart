@@ -76,6 +76,11 @@ class _RocketDetailPageState extends State<RocketDetailPage> {
                 ),
               ],
             ),
+            Text("Mission Related")
+                .textColor(Colors.blue)
+                .fontSize(16)
+                .fontWeight(FontWeight.w600)
+                .padding(vertical: 10),
             FutureBuilder(
               future: _client.query(
                 QueryOptions(
@@ -92,11 +97,13 @@ class _RocketDetailPageState extends State<RocketDetailPage> {
                   for (var launch in snapshot.data.data["launchesPast"]) {
                     rocketRelatedLaunchList.add(Launch.fromJson(launch));
                   }
+                  print(rocketRelatedLaunchList);
                   return ListView.builder(
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: rocketRelatedLaunchList.length,
                     itemBuilder: (context, index) {
+                      print(index);
                       return LaunchNewsTile(
                         launch: rocketRelatedLaunchList[index],
                         isMainPage: false,

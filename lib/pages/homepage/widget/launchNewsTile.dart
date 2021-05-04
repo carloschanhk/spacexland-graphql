@@ -16,8 +16,6 @@ class LaunchNewsTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final launchListProvider = context.watch<PastLaunchesModel>();
-    final likedListProvider = context.watch<LikedLaunchesModel>();
     return InkWell(
       onTap: () {
         context.navigator.push(
@@ -65,7 +63,7 @@ class LaunchNewsTile extends StatelessWidget {
                       launch.details == null
                           ? Container()
                           : Text(
-                              "${launch.details.split(" ").sublist(0, 20).join(" ")}",
+                              "${launch.details.split(" ").length >= 20 ? launch.details.split(" ").sublist(0, 20).join(" ") : launch.details}",
                               style: TextStyle(
                                 color: Colors.grey,
                               ),
@@ -101,8 +99,6 @@ class LaunchNewsTile extends StatelessWidget {
                                 ),
                                 DeleteButton(
                                   launch: launch,
-                                  launchListProvider: launchListProvider,
-                                  likedListProvider: likedListProvider,
                                 ),
                               ],
                             ).padding(top: 5)
@@ -123,16 +119,14 @@ class DeleteButton extends StatelessWidget {
   const DeleteButton({
     Key key,
     @required this.launch,
-    @required this.launchListProvider,
-    this.likedListProvider,
   }) : super(key: key);
 
   final Launch launch;
-  final PastLaunchesModel launchListProvider;
-  final LikedLaunchesModel likedListProvider;
 
   @override
   Widget build(BuildContext context) {
+    final launchListProvider = context.read<PastLaunchesModel>();
+    final likedListProvider = context.read<LikedLaunchesModel>();
     return IconButton(
       onPressed: () {
         int index;
