@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'model/appuser.dart';
 import 'model/launch.dart';
 import 'pages/detailspage/detailspage.dart';
+import 'pages/detailspage/rocketDetailPage.dart';
 import 'pages/homepage/homepage.dart';
 import 'pages/userpage/userpage.dart';
 
@@ -19,10 +20,12 @@ class Routes {
   static const String homePage = '/home-page';
   static const String userPage = '/';
   static const String detailsPage = '/details-page';
+  static const String rocketDetailPage = '/rocket-detail-page';
   static const all = <String>{
     homePage,
     userPage,
     detailsPage,
+    rocketDetailPage,
   };
 }
 
@@ -33,6 +36,7 @@ class AppRouter extends RouterBase {
     RouteDef(Routes.homePage, page: HomePage),
     RouteDef(Routes.userPage, page: UserPage),
     RouteDef(Routes.detailsPage, page: DetailsPage),
+    RouteDef(Routes.rocketDetailPage, page: RocketDetailPage),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -68,6 +72,19 @@ class AppRouter extends RouterBase {
         builder: (context) => DetailsPage(
           key: args.key,
           launch: args.launch,
+          isMainPage: args.isMainPage,
+        ),
+        settings: data,
+      );
+    },
+    RocketDetailPage: (data) {
+      final args = data.getArgs<RocketDetailPageArguments>(
+        orElse: () => RocketDetailPageArguments(),
+      );
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => RocketDetailPage(
+          key: args.key,
+          rocket: args.rocket,
         ),
         settings: data,
       );
@@ -99,5 +116,13 @@ class UserPageArguments {
 class DetailsPageArguments {
   final Key key;
   final Launch launch;
-  DetailsPageArguments({this.key, this.launch});
+  final bool isMainPage;
+  DetailsPageArguments({this.key, this.launch, this.isMainPage});
+}
+
+/// RocketDetailPage arguments holder class
+class RocketDetailPageArguments {
+  final Key key;
+  final Rocket rocket;
+  RocketDetailPageArguments({this.key, this.rocket});
 }

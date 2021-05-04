@@ -8,11 +8,11 @@ class LaunchNewsTile extends StatelessWidget {
   const LaunchNewsTile({
     Key key,
     this.launch,
-    this.likeLaunchToggle,
+    this.isMainPage,
   }) : super(key: key);
 
   final Launch launch;
-  final Function likeLaunchToggle;
+  final bool isMainPage;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,10 @@ class LaunchNewsTile extends StatelessWidget {
       onTap: () {
         context.navigator.push(
           Routes.detailsPage,
-          arguments: DetailsPageArguments(launch: launch),
+          arguments: DetailsPageArguments(
+            launch: launch,
+            isMainPage: isMainPage,
+          ),
         );
       },
       child: Card(
@@ -89,19 +92,21 @@ class LaunchNewsTile extends StatelessWidget {
                                     "lib/data/images/spaceX-logo.jpg"),
                               ),
                       ),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          LikeButton(
-                            launch: launch,
-                          ),
-                          DeleteButton(
-                            launch: launch,
-                            launchListProvider: launchListProvider,
-                            likedListProvider: likedListProvider,
-                          ),
-                        ],
-                      ).padding(top: 5),
+                      isMainPage
+                          ? Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                LikeButton(
+                                  launch: launch,
+                                ),
+                                DeleteButton(
+                                  launch: launch,
+                                  launchListProvider: launchListProvider,
+                                  likedListProvider: likedListProvider,
+                                ),
+                              ],
+                            ).padding(top: 5)
+                          : Container(),
                     ],
                   ).padding(top: 10, right: 10)
                 ],

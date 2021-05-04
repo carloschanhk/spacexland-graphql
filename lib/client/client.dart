@@ -16,6 +16,8 @@ class Config {
 
   static Link link = httpLink.concat(webSocketLink);
 
+  static get client => GraphQLClient(link: link, cache: GraphQLCache());
+
   static ValueNotifier<GraphQLClient> initialClient() {
     ValueNotifier<GraphQLClient> client = ValueNotifier(
       GraphQLClient(

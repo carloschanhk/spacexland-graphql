@@ -50,7 +50,7 @@ class _LaunchesPageState extends State<LaunchesPage> {
               itemBuilder: (context, index) {
                 return LaunchNewsTile(
                   launch: pastLaunchesProvider.launchesList[index],
-                  likeLaunchToggle: likeLaunchToggle,
+                  isMainPage: true,
                 ).padding(horizontal: 10, vertical: 5);
               },
             ),
@@ -67,8 +67,8 @@ class _LaunchesPageState extends State<LaunchesPage> {
             itemCount: likedLaunchesProvider.launchesList.length,
             itemBuilder: (context, index) {
               return LaunchNewsTile(
-                likeLaunchToggle: likeLaunchToggle,
                 launch: likedLaunchesProvider.launchesList[index],
+                isMainPage: true,
               );
             },
           ),

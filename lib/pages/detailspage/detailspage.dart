@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class DetailsPage extends StatefulWidget {
-  DetailsPage({Key key, this.launch}) : super(key: key);
+  DetailsPage({Key key, this.launch, this.isMainPage}) : super(key: key);
   final Launch launch;
+  final bool isMainPage;
 
   @override
   _DetailsPageState createState() => _DetailsPageState();
@@ -53,9 +54,11 @@ class _DetailsPageState extends State<DetailsPage> {
                 context.navigator.pop();
               },
             ),
-            actions: [
-              LikeButton(launch: widget.launch).padding(right: 20),
-            ],
+            actions: widget.isMainPage
+                ? [
+                    LikeButton(launch: widget.launch).padding(right: 20),
+                  ]
+                : [],
             elevation: 0,
           ),
           body: BodyWidget(
@@ -120,27 +123,31 @@ class BodyWidget extends StatelessWidget {
                 "${launch.details ?? ''}",
                 style: TextStyle(fontSize: 16, height: 1.5),
               ).padding(vertical: 10),
-              player,
-              Text(
-                "Rocket Infomation",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ).padding(top: 10),
-              Text("Rocket Name: ${rocket.name}")
-                  .fontSize(16)
-                  .padding(top: 10, bottom: 5),
-              Text("Company: ${rocket.company}, ${rocket.country}")
-                  .fontSize(16),
-              Text(
-                "Description",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ).fontSize(16).padding(top: 10),
-              Text(
-                "${rocket.description}",
-                style: TextStyle(fontSize: 16, height: 1.5),
+              ElevatedButton(
+                onPressed: () {},
+                child: Text("Rocket Info"),
               ),
+              player,
+              // Text(
+              //   "Rocket Infomation",
+              //   style: TextStyle(
+              //     fontSize: 20,
+              //     fontWeight: FontWeight.bold,
+              //   ),
+              // ).padding(top: 10),
+              // Text("Rocket Name: ${rocket.name}")
+              //     .fontSize(16)
+              //     .padding(top: 10, bottom: 5),
+              // Text("Company: ${rocket.company}, ${rocket.country}")
+              //     .fontSize(16),
+              // Text(
+              //   "Description",
+              //   style: TextStyle(fontWeight: FontWeight.bold),
+              // ).fontSize(16).padding(top: 10),
+              // Text(
+              //   "${rocket.description}",
+              //   style: TextStyle(fontSize: 16, height: 1.5),
+              // ),
               Container(
                 child: launch.links.imageList.length > 0
                     ? ListView.builder(
