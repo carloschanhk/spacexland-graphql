@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spacexland_graphql/pages/userpage/userpage.dart';
 import 'package:spacexland_graphql/provider/launches_provider.dart';
+import 'package:spacexland_graphql/provider/rockets_provider.dart';
 import 'constants/ui_files.dart';
 
 void main() {
@@ -9,6 +10,7 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (context) => PastLaunchesModel()),
         ChangeNotifierProvider(create: (context) => LikedLaunchesModel()),
+        ChangeNotifierProvider(create: (context) => RocketsModel()),
       ],
       child: MyApp(),
     ),
