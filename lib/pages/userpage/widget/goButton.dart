@@ -100,7 +100,7 @@ class GoButton extends StatelessWidget {
         .then((value) {
       final returningData = value.data["rockets"];
       for (var rocket in returningData) {
-        rocketProvider.addRocket(rocket);
+        rocketProvider.addRocket(Rocket.fromJson(rocket));
       }
     });
   }
